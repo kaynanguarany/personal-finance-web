@@ -15,6 +15,7 @@ const financeAPI = (query) => (Comp) =>
     }
 
     componentDidMount() {
+      console.log(query);
       this.setState({ isLoading: true });
       fetch(rootURL+query)
         .then(response => {

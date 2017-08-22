@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
-import financeAPI from './FinanceAPI';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+// import financeAPI from './FinanceAPI';
+import { loadList } from '../actions/financeActions';
 
 class Accounts extends Component {
+
+  componentWillMount() {
+    this.props.loadList();
+  }
 
   accountItem(props) {
     return(
@@ -32,12 +39,22 @@ class Accounts extends Component {
   }
 
   render () {
+    if (_.isNull(this.props.list)) {
+      return (<div>loading...</div>)
+    }
+
     return (
       <div>
-        {this.accountList(this.props.data)}
+        {this.accountList(this.props.list)}
       </div>
     )
   }
 }
 
-export default financeAPI('accounts')(Accounts); 
+const mapStateToProps = (state) => {
+  const { list } = state.finance;
+
+  return { list };
+};
+
+export default connect(mapStateToProps, { loadList })(Accounts);
