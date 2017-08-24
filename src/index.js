@@ -1,15 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import { Provider } from 'react-redux';
-import { createStore, combineReducers } from 'redux';
-import FinanceReducer from './reducers/FinanceReducer';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App'
+import registerServiceWorker from './registerServiceWorker'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import Reducers from './reducers'
 
-const reducers = combineReducers({ finance: FinanceReducer });
-
-const store = createStore(reducers);
+const store = createStore(
+  Reducers,
+  applyMiddleware(thunk)
+)
 
 ReactDOM.render(
   (
@@ -18,5 +20,6 @@ ReactDOM.render(
     </Provider>
   ), 
   document.getElementById('root')
-);
+)
+
 registerServiceWorker();
