@@ -38,8 +38,6 @@ class Accounts extends Component {
   }
 
   render () {
-    console.log("dentro do render");
-    console.log(this.props.accounts);
     if (this.props.hasErrored) {
       return <p>Sorry! There was an error loading the items</p>;
     }
