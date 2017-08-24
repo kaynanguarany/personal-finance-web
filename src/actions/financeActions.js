@@ -1,31 +1,36 @@
 import types from './Types';
 import { fetchFinanceData } from './Finance';
 
-export function errored(value) {
-  return {
+
+export const errored = (dispatch, value) => {
+  dispatch({
     type: types.ERRORED,
     payload: value
-  };
-}
+  });
+};
 
-export function isLoading(value) {
-  return {
+
+export const isLoading = (dispatch, value) => {
+  dispatch({
     type: types.FETCHING_DATA,
     payload: value
-  };
+  });
 }
 
-export function fetchDataSuccess(data = []) {
-  console.log('fetch success')
-  return {
+
+
+export const fetchDataSuccess = (dispatch, data = []) => {
+  console.log('fetch success');
+  console.log(data);
+  dispatch({
     type: types.ACCOUNTS,
     payload: data
-  }
+  });
 }
 
 export const fetchAccounts = () => {
   console.log('fetchAccounts')
-  return (dispatch) => {
+  return async (dispatch) => {
     fetchFinanceData('accounts', dispatch)
   }
 }
