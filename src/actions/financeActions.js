@@ -1,5 +1,5 @@
-import types from './Types'
-import { fetchFinanceData } from './Finance'
+import types from './Types';
+import { fetchFinanceData } from './Finance';
 
 export function errored(value) {
   return {

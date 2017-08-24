@@ -5,7 +5,7 @@ import { fetchAccounts } from '../actions/FinanceActions'
 class Accounts extends Component {
 
   componentDidMount() {
-    this.props.fetchData()
+    this.props.fetchAccounts()
   }
 
   accountItem(props) {
@@ -58,10 +58,8 @@ const mapStateToProps = (state) => {
   return { accounts, hasErrored, isLoading }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchData: () => dispatch(fetchAccounts())
-  }
+const mapFunctionsToProps = {
+  fetchAccounts
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Accounts);
+export default connect(mapStateToProps, mapFunctionsToProps )(Accounts);
