@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import financeAPI from './FinanceAPI';
+import { connect } from 'react-redux'
+import { fetchFinanceData } from '../actions/Finance'
 
 class Transactions extends Component {
 
@@ -37,13 +38,37 @@ class Transactions extends Component {
     )
   }
 
+  componentDidMount() {
+    // this.props.fetchData('transactions')
+  }
+
   render () {
-    return (
-      <div>
-        {this.transactionList(this.props.data)}
-      </div>
-    )
+    // if (this.props.hasErrored) {
+    //   return <p>Sorry! There was an error loading the items</p>;
+    // }
+    // if (this.props.isLoading) {
+    //   return <p>Loading…</p>;
+    // }
+    return ( <p> Transactions </p>)
+    // return (
+    //   <div>
+    //     {this.transactionList(this.props.transactions)}
+    //   </div>
+    // )
   }
 }
 
-export default financeAPI('transactions')(Transactions); 
+
+const mapStateToProps = (state) => {
+  // const { transactions, hasErrored, isLoading } = state;
+  // return { transactions, hasErrored, isLoading }
+  return state
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchData: (url) => dispatch(fetchFinanceData(url))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Transactions);

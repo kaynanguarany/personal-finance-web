@@ -1,28 +1,27 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import _ from 'lodash';
-// import financeAPI from './FinanceAPI';
-import { loadList } from '../actions/financeActions';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { fetchAccounts } from '../actions/FinanceActions'
 
 class Accounts extends Component {
 
-  componentWillMount() {
-    this.props.loadList();
+  componentDidMount() {
+    this.props.fetchData()
   }
 
   accountItem(props) {
     return(
       <tr>
         <td>{props.value.name}</td>
-        <td>{props.value.initial_balance}</td>
+        <td>{props.value.current_balance}</td>
       </tr>
     )
   }
 
-  accountList(data) {
-    const itens = data.map((a) => 
+  listAccounts() {
+    const itens = this.props.accounts.map((a) => 
       <this.accountItem key={a.id} value={a} />
     )
+    console.log(itens)
     return (
       <table className="table table-striped">
       <thead>
@@ -39,22 +38,30 @@ class Accounts extends Component {
   }
 
   render () {
-    if (_.isNull(this.props.list)) {
-      return (<div>loading...</div>)
+    if (this.props.hasErrored) {
+      return <p>Sorry! There was an error loading the items</p>;
+    }
+    if (this.props.isLoading) {
+      return <p>Loading…</p>;
     }
 
     return (
       <div>
-        {this.accountList(this.props.list)}
+        {this.listAccounts()}
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  const { list } = state.finance;
+  const { accounts, hasErrored, isLoading } = state.accounts;
+  return { accounts, hasErrored, isLoading }
+}
 
-  return { list };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchData: () => dispatch(fetchAccounts())
+  }
 };
 
-export default connect(mapStateToProps, { loadList })(Accounts);
+export default connect(mapStateToProps, mapDispatchToProps)(Accounts);
